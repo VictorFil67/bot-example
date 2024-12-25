@@ -137,11 +137,26 @@ bot.on("text", async (msg) => {
       await bot.sendContact(msg.chat.id, CONTACT, "Contact", {
         reply_to_message_id: msg.message_id,
       });
-    } else if ((msg.text = "⭐️ Geolocation")) {
+    } else if (msg.text == "⭐️ Geolocation") {
       const letitude = 50.236;
       const longitude = 28.623;
       await bot.sendLocation(msg.chat.id, letitude, longitude, {
-        // reply_to_message_id: msg.message_id,
+        reply_to_message_id: msg.message_id,
+      });
+    } else if (msg.text == "/inline_menu") {
+      await bot.sendMessage(msg.chat.id, "Inline menu", {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: "Sticker", callback_data: "sticker" },
+              { text: "Circle video", callback_data: "circleVideo" },
+            ],
+            [{ text: "Buy file", callback_data: "buyFile" }],
+            [{ text: "Check subscription", callback_data: "checkSubs" }],
+            [{ text: "Close menu", callback_data: "closeMenu" }],
+          ],
+          // resize_keyboard: true,
+        },
       });
     } else {
       await bot.sendMessage(msg.chat.id, msg.text);

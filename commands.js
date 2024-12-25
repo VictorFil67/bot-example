@@ -1,18 +1,22 @@
 export const commands = [
   {
     command: "start",
-    description: "Запуск бота",
+    description: "Launching the bot",
   },
   {
     command: "ref",
-    description: "Получить реферальную ссылку",
+    description: "Get a referral link",
   },
   {
     command: "help",
-    description: "Раздел помощи",
+    description: "Help section",
   },
   {
     command: "keyboard_menu",
     description: "Keyboard Menu",
+  },
+  {
+    command: "inline_menu",
+    description: "Inline menu",
   },
 ];
