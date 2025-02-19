@@ -43,6 +43,9 @@ const bot = new TelegramBot(API_KEY_BOT, {
 //**2**
 let firstNum = 0;
 let secondNum = 0;
+let regexp = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+let text = "";
+
 bot.on("text", async (msg) => {
   try {
     if (msg.text.startsWith("/start")) {
@@ -57,11 +60,21 @@ bot.on("text", async (msg) => {
       }
     } else if (msg.text === "/ref") {
       await bot.sendMessage(msg.chat.id, `${URL_TO_BOT}?start=${msg.from.id}`);
-    } else if (!isNaN(parseInt(msg.text)) && firstNum === 0) {
+    } else if (
+      !isNaN(parseInt(msg.text)) &&
+      firstNum === 0 &&
+      text != "Enter your email"
+    ) {
+      console.log("text: ", text);
       console.log(parseInt(msg.text));
       firstNum = parseInt(msg.text);
       await bot.sendMessage(msg.chat.id, "Enter anothe number");
-    } else if (!isNaN(parseInt(msg.text)) && firstNum !== 0) {
+    } else if (
+      !isNaN(parseInt(msg.text)) &&
+      firstNum !== 0 &&
+      text != "Enter your email"
+    ) {
+      console.log("text: ", text);
       console.log(parseInt(msg.text));
       secondNum = parseInt(msg.text);
       let sum = firstNum + secondNum;
@@ -158,6 +171,25 @@ bot.on("text", async (msg) => {
           // resize_keyboard: true,
         },
       });
+    } else if (msg.text == "/authorization") {
+      const botMessage = await bot.sendMessage(msg.chat.id, "Enter your email");
+      text = botMessage.text;
+      // if (text == "Enter your email" && msg.text == "/authorization") {
+      //   console.log("text: ", text);
+      //   console.log("msg.text: ", msg.text);
+      //   await bot.sendMessage(msg.chat.id, "Enter the right email");
+      // } else if (text == "Enter your email" && msg.text.match(regexp)) {
+      //   //   console.log("msg.text: ", msg.text);
+      //   //   await bot.sendMessage(msg.chat.id, "Enter your password");
+      //   // }
+      //   console.log("msg.id: ", msg.message_id);
+      //   // console.log("result: ", result);
+      //   console.log("text: ", text);
+      //   console.log("message_id: ", message_id);
+    } else if (text == "Enter your email" && !msg.text.match(regexp)) {
+      console.log("text: ", text);
+      console.log("msg.text: ", msg.text);
+      await bot.sendMessage(msg.chat.id, "Enter the right email");
     } else {
       await bot.sendMessage(msg.chat.id, msg.text);
     }
@@ -165,6 +197,7 @@ bot.on("text", async (msg) => {
     console.log(error);
   }
 });
+//
 
 bot.on("photo", async (pic) => {
   try {
@@ -268,6 +301,15 @@ bot.on("location", async (location) => {
       location.chat.id,
       `Latitude: ${location.location.latitude}\nLongitude: ${location.location.longitude}`
     );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+bot.on("callback_query", async (kkk) => {
+  //the argument (kkk) can be anything
+  try {
+    console.log(kkk);
   } catch (error) {
     console.log(error);
   }

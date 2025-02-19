@@ -19,4 +19,8 @@ export const commands = [
     command: "inline_menu",
     description: "Inline menu",
   },
+  {
+    command: "authorization",
+    description: "Authorization",
+  },
 ];
