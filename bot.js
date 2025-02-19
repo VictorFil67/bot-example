@@ -63,7 +63,8 @@ bot.on("text", async (msg) => {
     } else if (
       !isNaN(parseInt(msg.text)) &&
       firstNum === 0 &&
-      text != "Enter your email"
+      text != "Enter your email" &&
+      text != "Enter your password"
     ) {
       console.log("text: ", text);
       console.log(parseInt(msg.text));
@@ -72,7 +73,8 @@ bot.on("text", async (msg) => {
     } else if (
       !isNaN(parseInt(msg.text)) &&
       firstNum !== 0 &&
-      text != "Enter your email"
+      text != "Enter your email" &&
+      text != "Enter your password"
     ) {
       console.log("text: ", text);
       console.log(parseInt(msg.text));
@@ -190,6 +192,31 @@ bot.on("text", async (msg) => {
       console.log("text: ", text);
       console.log("msg.text: ", msg.text);
       await bot.sendMessage(msg.chat.id, "Enter the right email");
+    } else if (text == "Enter your email" && msg.text.match(regexp)) {
+      console.log("text: ", text);
+      console.log("msg.text: ", msg.text);
+      const botMessage = await bot.sendMessage(
+        msg.chat.id,
+        "Enter your password"
+      );
+      text = botMessage.text;
+    } else if (text == "Enter your password" && msg.text.length <= 5) {
+      console.log("text: ", text);
+      console.log("msg.text: ", msg.text);
+      // const botMessage =
+      await bot.sendMessage(
+        msg.chat.id,
+        `You enter the password of the length of ${msg.text.length} characters The password length must not be less than 6 characters`
+      );
+      // text = botMessage.text;
+    } else if (text == "Enter your password" && msg.text.length > 5) {
+      console.log("text: ", text);
+      console.log("msg.text: ", msg.text);
+      const botMessage = await bot.sendMessage(
+        msg.chat.id,
+        "You entered the right email and password"
+      );
+      text = botMessage.text;
     } else {
       await bot.sendMessage(msg.chat.id, msg.text);
     }
