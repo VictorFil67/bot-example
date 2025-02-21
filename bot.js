@@ -176,18 +176,6 @@ bot.on("text", async (msg) => {
     } else if (msg.text == "/authorization") {
       const botMessage = await bot.sendMessage(msg.chat.id, "Enter your email");
       text = botMessage.text;
-      // if (text == "Enter your email" && msg.text == "/authorization") {
-      //   console.log("text: ", text);
-      //   console.log("msg.text: ", msg.text);
-      //   await bot.sendMessage(msg.chat.id, "Enter the right email");
-      // } else if (text == "Enter your email" && msg.text.match(regexp)) {
-      //   //   console.log("msg.text: ", msg.text);
-      //   //   await bot.sendMessage(msg.chat.id, "Enter your password");
-      //   // }
-      //   console.log("msg.id: ", msg.message_id);
-      //   // console.log("result: ", result);
-      //   console.log("text: ", text);
-      //   console.log("message_id: ", message_id);
     } else if (text == "Enter your email" && !msg.text.match(regexp)) {
       console.log("text: ", text);
       console.log("msg.text: ", msg.text);
